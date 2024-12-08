@@ -1,0 +1,174 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock the Key</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('cara.jpg'); /* Mantiene tu fondo inicial */
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            transition: background-color 5s ease-in-out;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* Llave - Usamos una imagen realista */
+        .key {
+            width: 80px;
+            height: auto;
+            background-color: transparent;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 1s ease-in-out;
+        }
+
+        .key img {
+            width: 100%;
+            height: auto;
+        }
+
+        .code {
+            font-size: 18px;
+            color: #ffffff;
+            text-shadow: 1px 1px 2px #000000;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 5px;
+            font-size: 16px;
+            width: 120px;
+            text-align: center;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Texto final */
+        .final-text {
+            display: none;
+            font-size: 50px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px #000000;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInText 4s forwards;
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Animación de la llave dando vueltas */
+        @keyframes rotateKey {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Transición suave para cambiar el fondo a negro */
+        .background-black {
+            background-color: black;
+            transition: background-color 5s ease-in-out; /* Transición más lenta */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="key" id="key">
+            <!-- Usamos una imagen de llave realista -->
+            <img src="Dani.png" alt="Key"> <!-- Asegúrate de tener la imagen "key.png" en el directorio -->
+        </div>
+        <div class="code">
+            Enter Code: <input type="text" id="codeInput" maxlength="4">
+        </div>
+        <button onclick="checkCode()">Unlock</button>
+    </div>
+    <div class="final-text" id="finalText">EL CANAL</div>
+    <audio id="Cancionla" src="Cancionla.mp3" preload="auto"></audio>
+
+    <script>
+        function checkCode() {
+            const code = document.getElementById('codeInput').value;
+            const key = document.getElementById('key');
+            const container = document.getElementById('container');
+            const finalText = document.getElementById('finalText');
+            const body = document.body;
+            const music = document.getElementById('Cancionla');
+
+            if (code === '3112') {
+                // Reproducir música
+                music.play().catch(() => console.log("El navegador bloqueó la reproducción automática."));
+
+                // Animar la llave con rotación
+                key.style.animation = 'rotateKey 2s ease-in-out forwards';
+
+                // Esperar a que termine la animación de la llave antes de ocultar el contenido
+                setTimeout(() => {
+                    key.style.display = 'none'; // La llave desaparece después de rotar
+
+                    // Cambiar el fondo a negro lentamente y mostrar el texto
+                    body.classList.add('background-black');
+                    container.style.display = 'none';
+                    finalText.style.display = 'block';
+
+                    // Esperar 3 segundos para cambiar el fondo a la imagen personalizada
+                    setTimeout(() => {
+                        body.style.backgroundImage = 'url("mi_imagen.jpg")'; // Cambiar el fondo a tu imagen
+                        body.style.backgroundSize = 'cover';
+                        body.style.backgroundPosition = 'center';
+                    }, 3000); // 3 segundos después de mostrar el texto "EL CANAL"
+                }, 2500); // Tiempo suficiente para la animación de la llave
+            } else {
+                alert('Incorrect code. Try again.');
+            }
+        }
+    </script>
+</body>
+</html>
